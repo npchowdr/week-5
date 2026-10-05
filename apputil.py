@@ -5,12 +5,12 @@ df = pd.read_csv('https://raw.githubusercontent.com/leontoddjohnson/datasets/mai
 
 # update/add code below ...
 def survival_demographics():
-  df['Age_group'] = pd.cut(df['Age'], bins=[0, 12, 19, 59, 120], labels=['Child', 'Teen', 'Adult', 'Senior'])
-  grouped_df = df.groupby(["Pclass", "Sex", "Age_group"], observed=False).agg(
+  df['age_group'] = pd.cut(df['Age'], bins=[0, 12, 19, 59, 120], labels=['Child', 'Teen', 'Adult', 'Senior'])
+  grouped_df = df.groupby(["Pclass", "Sex", "age_group"], observed=False).agg(
     n_passengers=("PassengerId", "count"),
     n_survivors=("Survived", "sum"),
     survival_rate=("Survived", "mean")
-  ).reset_index().sort_values(["Pclass", "Sex", "Age_group"])
+  ).reset_index().sort_values(["Pclass", "Sex", "age_group"])
   return grouped_df
 
 #plot did first class passengers have a higher survival rate than second and third class passengers?

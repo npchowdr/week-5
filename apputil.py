@@ -16,6 +16,7 @@ def survival_demographics():
 #plot did first class passengers have a higher survival rate than second and third class passengers?
 def visualize_demographic():
   grouped_df = survival_demographics()
+  grouped_df['pclass'] = grouped_df['Pclass'].astype(str)  # Convert Pclass to string for better labeling in the plot
 
   #regroup the data to be by class and survival rate
   grouped_df = grouped_df.groupby(["Pclass"]).agg(

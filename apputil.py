@@ -12,7 +12,8 @@ def survival_demographics():
     n_passengers=("PassengerId", "count"),
     n_survivors=("Survived", "sum"),
     survival_rate=("Survived", "mean")
-  ).reset_index().sort_values(["pclass", "sex", "age_group"])
+  ).reset_index().sort_values(["n_passengers"], ascending=True)
+  #.reset_index().sort_values(["pclass", "sex", "age_group"])
   return grouped_df
 
 #plot did first class passengers have a higher survival rate than second and third class passengers?

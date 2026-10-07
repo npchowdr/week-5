@@ -1,24 +1,22 @@
 import plotly.express as px
 import pandas as pd
 
-df = pd.read_csv('https://raw.githubusercontent.com/leontoddjohnson/datasets/main/data/titanic.csv')
+df = pd.read_csv('https://raw.githubusercontent.com/leontoddjohnson/datasets/main/data/titanic.csv') .str.lower().str.replace(" ", "_")
 
 # update/add code below ...
 def survival_demographics():
-  df['age_group'] = pd.cut(df['Age'], bins=[0, 12, 19, 59, 120], labels=['child', 'teen', 'adult', 'senior'])
-  df['pclass'] = df['Pclass'].astype(str)  # Convert Pclass to string for better labeling in the plot
-  df['sex'] = df['Sex'].astype(str)  # Convert Sex to string for better labeling in the plot
+  df['age_group'] = pd.cut(df['Age'], bins=[0, 12, 19, 59, 120], labels=['Child', 'Teen', 'Adult', 'Senior'])
   grouped_df = df.groupby(["pclass", "sex", "age_group"], observed=False).agg(
     n_passengers=("PassengerId", "count"),
     n_survivors=("Survived", "sum"),
     survival_rate=("Survived", "mean")
-  ).reset_index().sort_values(["pclass", "sex", "age_group"])
+  ).reset_index()
+  #.sort_values(["pclass", "sex", "age_group"])
   return grouped_df
 
 #plot did first class passengers have a higher survival rate than second and third class passengers?
 def visualize_demographic():
   grouped_df = survival_demographics()
-  grouped_df['pclass'] = grouped_df['Pclass'].astype(str)  # Convert Pclass to string for better labeling in the plot
 
   #regroup the data to be by class and survival rate
   grouped_df = grouped_df.groupby(["pclass"]).agg(

@@ -1,10 +1,11 @@
 import plotly.express as px
 import pandas as pd
 
-df = pd.read_csv('https://raw.githubusercontent.com/leontoddjohnson/datasets/main/data/titanic.csv') .str.lower().str.replace(" ", "_")
+df = pd.read_csv('https://raw.githubusercontent.com/leontoddjohnson/datasets/main/data/titanic.csv')
 
 # update/add code below ...
 def survival_demographics():
+  df.columns = df.columns.str.lower().str.replace(" ", "_")
   df['age_group'] = pd.cut(df['Age'], bins=[0, 12, 19, 59, 120], labels=['Child', 'Teen', 'Adult', 'Senior'])
   grouped_df = df.groupby(["pclass", "sex", "age_group"], observed=False).agg(
     n_passengers=("PassengerId", "count"),

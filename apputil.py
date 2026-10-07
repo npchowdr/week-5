@@ -5,9 +5,9 @@ df = pd.read_csv('https://raw.githubusercontent.com/leontoddjohnson/datasets/mai
 
 # update/add code below ...
 def survival_demographics():
-  df['age_group'] = pd.cut(df['Age'], bins=[0, 12, 19, 59, 120], labels=['Child', 'Teen', 'Adult', 'Senior'])
-  df['pclass'] = df['Pclass'].astype(str)  # Convert Pclass to string for better labeling in the plot
-  df['sex'] = df['Sex'].astype(str)  # Convert Sex to string for better labeling in the plot
+  df['age_group'] = pd.cut(df['Age'], bins=[0, 12, 19, 59, 200], labels=['Child', 'Teen', 'Adult', 'Senior'])
+  df['pclass'] = df['Pclass']
+  df['sex'] = df['Sex']
   grouped_df = df.groupby(["pclass", "sex", "age_group"], observed=False).agg(
     n_passengers=("PassengerId", "count"),
     n_survivors=("Survived", "sum"),

@@ -5,8 +5,9 @@ df = pd.read_csv('https://raw.githubusercontent.com/leontoddjohnson/datasets/mai
 
 # update/add code below ...
 def survival_demographics():
-  df.columns = df.columns.str.lower().str.replace(" ", "_")
   df['age_group'] = pd.cut(df['Age'], bins=[0, 12, 19, 59, 120], labels=['Child', 'Teen', 'Adult', 'Senior'])
+  df['pclass'] = df['Pclass'].astype(str)  # Convert Pclass to string for better labeling in the plot
+  df['sex'] = df['Sex'].astype(str)  # Convert Sex to string for better labeling in the plot
   grouped_df = df.groupby(["pclass", "sex", "age_group"], observed=False).agg(
     n_passengers=("PassengerId", "count"),
     n_survivors=("Survived", "sum"),
@@ -18,6 +19,7 @@ def survival_demographics():
 #plot did first class passengers have a higher survival rate than second and third class passengers?
 def visualize_demographic():
   grouped_df = survival_demographics()
+  grouped_df['pclass'] = grouped_df['Pclass'].astype(str)  # Convert Pclass to string for better labeling in the plot
 
   #regroup the data to be by class and survival rate
   grouped_df = grouped_df.groupby(["pclass"]).agg(
